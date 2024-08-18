@@ -1,0 +1,32 @@
+- name: Configure SSH
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: sshport
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?Port '
+        line: 'Port 222'
+        state: present
+
+    - name: pswdisable
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PasswordAuthentication '
+        line: 'PasswordAuthentication no'
+        state: present
+
+    - name: rootoff
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PermitRootLogin '
+        line: 'PermitRootLogin no'
+        state: present
+
+    - name: Restart SSH service
+      service:
+        name: ssh
+        name: ssh.socket
+        state: restarted
+
