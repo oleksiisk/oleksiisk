@@ -1,0 +1,20 @@
+- name: elk
+  hosts: dbservers
+  become: yes
+  tasks:
+
+    - name: elasticsearch
+      apt:
+        name: elasticsearch
+        state: present
+
+    - name: logstash
+      apt:
+        name: logstash
+        state: present
+
+    - name: kibana
+      apt:
+        name: kibana
+        state: present
+
