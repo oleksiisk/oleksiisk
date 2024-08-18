@@ -1,0 +1,28 @@
+- name: lemp
+  hosts: webservers
+  become: yes
+  tasks:
+
+    - name: nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: php
+      apt:
+        name:
+          - php
+          - php-fpm
+          - php-mysql
+          - php-cli
+        state: present
+
+    - name: msq
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: filebeat
+      apt:
+        name: filebeat
+        state: present
