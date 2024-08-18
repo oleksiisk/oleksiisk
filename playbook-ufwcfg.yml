@@ -1,0 +1,67 @@
+- name: ufwcfg
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: ssh
+      ufw:
+        rule: allow
+        port: '222'
+        proto: tcp
+
+    - name: httphttps
+      ufw:
+        rule: allow
+        port: '{{ item }}'
+        proto: tcp
+      loop:
+        - '80'
+        - '443'
+
+    - name: msql
+      ufw:
+        rule: allow
+        port: '3306'
+        proto: tcp
+
+    - name: elastic
+      ufw:
+        rule: allow
+        port: '{{ item }}'
+        proto: tcp
+      loop:
+        - '9200'
+        - '9300'
+
+    - name: kibana
+      ufw:
+        rule: allow
+        port: '5601'
+        proto: tcp
+
+    - name: logstash
+      ufw:
+        rule: allow
+        port: '5044'
+        proto: tcp
+
+    - name: filebeat
+      ufw:
+        rule: allow
+        port: '5044'
+        proto: tcp
+
+    - name: inblock
+      ufw:
+        direction: incoming
+        policy: deny
+
+    - name: outallow
+      ufw:
+        direction: outgoing
+        policy: allow
+
+    - name: Enable UFW
+      ufw:
+        state: enabled
+        logging: 'on'
